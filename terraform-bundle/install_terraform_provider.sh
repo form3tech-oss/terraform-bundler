@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
+
 PROVIDER_NAME=$1
 PROVIDER_VERSION=$2
 PROVIDER_GITHUB_URL=$3
+PLATFORM=`uname`
 ARCH="linux"
 
 echo Installing ${PROVIDER_NAME} version ${PROVIDER_VERSION} from ${PROVIDER_GITHUB_URL} architecture ${ARCH}
@@ -11,14 +13,12 @@ if [ $? -ne 0 ]; then
 fi
 
 unzip terraform-provider-${PROVIDER_NAME}.zip terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION}
-if [ $? -ne 0 ]; then
+
+if [ ! -f terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION} ]; then
     unzip terraform-provider-${PROVIDER_NAME}.zip terraform-provider-${PROVIDER_NAME}
-    mv terraform-provider-${PROVIDER_NAME} ./terraform-bundle/plugins/
-    mv ./terraform-bundle/plugins/terraform-provider-${PROVIDER_NAME} ./terraform-bundle/plugins/terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION}
-    chmod +x ./terraform-bundle/plugins/terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION}
-    rm terraform-provider-${PROVIDER_NAME}.zip
-else
-    mv terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION} ./terraform-bundle/plugins/
-    chmod +x ./terraform-bundle/plugins/terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION}
-    rm terraform-provider-${PROVIDER_NAME}.zip
+    mv terraform-provider-${PROVIDER_NAME} terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION}
 fi
+
+mv terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION} ./plugins/
+chmod +x ./plugins/terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION}
+rm terraform-provider-${PROVIDER_NAME}.zip

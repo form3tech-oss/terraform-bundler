@@ -1,1 +1,0 @@
-Here goes the custom providers we want to add to terraform.
