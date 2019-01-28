@@ -60,7 +60,7 @@ EOF
 )
 
 curl \
-  --header "Authorization: Bearer $ATLAS_TOKEN" \
+  --header "Authorization: Bearer $TFE_TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   --data "$payload" \
