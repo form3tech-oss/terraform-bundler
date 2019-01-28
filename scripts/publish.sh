@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
+WORK_DIR="$(git rev-parse --show-toplevel)"
 BUNDLE_FILE_NAME="$(ls $WORK_DIR/output/*.zip)"
 TAG="$BUNDLE_FILE_NAME"
 NAME="$TAG"
 BODY="release $TAG"
 REPO="form3tech-oss/terraform-bundler"
-WORK_DIR="$(git rev-parse --show-toplevel)"
 BUNDLE_SHA=$(shasum -a256 $BUNDLE_FILE_NAME| awk '{print $1}')
 BUNDLE_VERSION=$(echo $BUNDLE_FILE_NAME | cut -d '_' -f 2 )
 
