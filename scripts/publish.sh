@@ -1,22 +1,26 @@
 #!/usr/bin/env bash
 
-TAG="$(git describe --exact-match)"
-NAME="$TAG"
-BODY="release $TAG"
+
+
 REPO="form3tech-oss/terraform-bundler"
 WORK_DIR="$(git rev-parse --show-toplevel)"
 BUNDLE_FILE_NAME="$(ls $WORK_DIR/output/*.zip)"
+#BODY="terraform-provider-form3:0.19.1 \n terraform-provider-acme:0.6.0"
 BUNDLE_SHA=$(shasum -a256 $BUNDLE_FILE_NAME| awk '{print $1}')
 BUNDLE_VERSION=$(echo $BUNDLE_FILE_NAME | cut -d '_' -f 2 )
 
+ENV_FILE=$(cat .env)
+BODY=${ENV_FILE//$'\n'/<br />}
+
+echo "body: $BODY"
 
 # Publish Github Release
-echo "Publishing Github Release $NAME"
+echo "Publishing Github Release $BUNDLE_VERSION"
 
 payload=$(cat  << EOF
 {
-    "tag_name": "$TAG",
-    "name": "$NAME",
+    "tag_name": "$BUNDLE_VERSION",
+    "name": "$BUNDLE_VERSION",
     "body": "$BODY",
     "draft": false
 }
