@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
 
-
-
 REPO="form3tech-oss/terraform-bundler"
 WORK_DIR="$(git rev-parse --show-toplevel)"
 BUNDLE_FILE_NAME="$(ls $WORK_DIR/output/*.zip)"
-#BODY="terraform-provider-form3:0.19.1 \n terraform-provider-acme:0.6.0"
 BUNDLE_SHA=$(shasum -a256 $BUNDLE_FILE_NAME| awk '{print $1}')
 BUNDLE_VERSION=$(echo $BUNDLE_FILE_NAME | cut -d '_' -f 2 )
 
 ENV_FILE=$(cat .env)
 BODY=${ENV_FILE//$'\n'/<br />}
-
-echo "body: $BODY"
+BODY="SHA=$BUNDLE_SHA<br />$BODY"
 
 # Publish Github Release
 echo "Publishing Github Release $BUNDLE_VERSION"
@@ -31,8 +27,6 @@ response=$(
   curl --data "$payload" \
        "https://api.github.com/repos/$REPO/releases?access_token=$GITHUB_TOKEN"
 )
-
-echo "Response from github=$response"
 
 upload_url="$(echo "$response" | jq -r .upload_url | sed -e "s/{?name,label}//")"
 

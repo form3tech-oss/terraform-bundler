@@ -6,6 +6,9 @@ before_script:
 - export PATH=$PATH:$HOME/.local/bin
 script:
 - make
+branches:
+  only:
+  - master
 notifications:
   slack: form3:SLG0PifAeMC7xowWEt2rjFZn
 env:
