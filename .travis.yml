@@ -5,7 +5,7 @@ before_script:
 - pip install --user awscli
 - export PATH=$PATH:$HOME/.local/bin
 script:
-- make
+- 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then make; fi'
 branches:
   only:
   - master

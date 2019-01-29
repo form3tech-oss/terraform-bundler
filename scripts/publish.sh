@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 REPO="form3tech-oss/terraform-bundler"
 WORK_DIR="$(git rev-parse --show-toplevel)"
 BUNDLE_FILE_NAME="$(ls $WORK_DIR/output/*.zip)"
