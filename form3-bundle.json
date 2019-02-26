@@ -1,0 +1,35 @@
+{
+  "terraform_version": "0.11.11",
+  "providers": [
+    {
+      "name": "form3",
+      "url": "https://github.com/form3tech-oss/terraform-provider-form3",
+      "version": "0.20.0"
+    },
+    {
+      "name": "acme",
+      "url": "https://github.com/paybyphone/terraform-provider-acme",
+      "version": "0.6.0"
+    },
+    {
+      "name": "kibana",
+      "url": "https://github.com/ewilde/terraform-provider-kibana",
+      "version": "0.6.0"
+    },
+    {
+      "name": "alienvault",
+      "url": "https://github.com/form3tech-oss/terraform-provider-alienvault",
+      "version": "0.3.1"
+    },
+    {
+      "name": "auth0",
+      "url": "https://github.com/kevholditch/terraform-provider-auth0",
+      "version": "0.1.0"
+    },
+    {
+      "name": "codeowners",
+      "url": "https://github.com/form3tech-oss/terraform-provider-codeowners",
+      "version": "0.2.5"
+    }
+  ]
+}
