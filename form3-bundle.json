@@ -29,7 +29,7 @@
     {
       "name": "codeowners",
       "url": "https://github.com/form3tech-oss/terraform-provider-codeowners",
-      "version": "0.2.5"
+      "version": "0.2.7"
     }
   ]
 }
