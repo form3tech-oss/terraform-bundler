@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 REPO_WORK_DIR="$(git rev-parse --show-toplevel)"
 TARGET_PLATFORM=$1
-RUNNING_PLATFORM=$(uname)
 form3_bundle_json="$(cat $REPO_WORK_DIR/form3-bundle.json)"
 build_dir=$REPO_WORK_DIR/build
 plugins_dir=$REPO_WORK_DIR/build/plugins
 scripts_dir=$REPO_WORK_DIR/scripts
+uname_str=$(uname)
+if [ $uname_str = "Darwin" ]; then
+    RUNNING_PLATFORM="darwin"
+else
+    RUNNING_PLATFORM="linux"
+fi
+
 
 function prepareBuildDirectory() {
     if ls $build_dir 1> /dev/null 2>&1; then
