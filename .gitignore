@@ -3,3 +3,4 @@
 .DS_Store
 terraform-bundle/plugins/terraform-provider-*
 output/*.zip
+build/

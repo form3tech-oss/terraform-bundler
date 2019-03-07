@@ -1,14 +1,14 @@
 platform := $(shell uname)
 
-default: clear build publish
+default: clean build publish
 
-clear:
+clean:
 	@bash -c "./scripts/clear.sh"
 
 build:
-	@bash -c "./scripts/build.sh"
+	@bash -c "./scripts/build.sh linux"
 
 publish:
 	@bash -c "./scripts/publish.sh"
 
-.PHONY: build publish clear
+.PHONY: build publish clean

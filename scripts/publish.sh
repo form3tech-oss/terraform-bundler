@@ -2,13 +2,22 @@
 
 REPO="form3tech-oss/terraform-bundler"
 WORK_DIR="$(git rev-parse --show-toplevel)"
-BUNDLE_FILE_NAME="$(ls $WORK_DIR/output/*.zip)"
+BUNDLE_FILE_NAME="$(ls $WORK_DIR/build/*.zip)"
 BUNDLE_SHA=$(shasum -a256 $BUNDLE_FILE_NAME| awk '{print $1}')
 BUNDLE_VERSION=$(echo $BUNDLE_FILE_NAME | cut -d '_' -f 2 )
 
-ENV_FILE=$(cat .env)
-BODY=${ENV_FILE//$'\n'/<br />}
-BODY="SHA=$BUNDLE_SHA<br />$BODY"
+BODY="File SHA=$BUNDLE_SHA<br />"
+
+# Generate Release description
+form3_bundle_json="$(cat $WORK_DIR/form3-bundle.json)"
+providers=$(echo $form3_bundle_json | jq -c -r '.providers[]')
+
+while IFS= read -r provider ; do
+    provider_name=$(echo $provider | jq -r '.name')
+    provider_version=$(echo $provider | jq -r '.version')
+    provider_url=$(echo $provider | jq -r '.url')
+    BODY+="[$provider_name provider]($provider_url): $provider_version <br />"
+done < <(printf '%s\n' "$providers")
 
 # Publish Github Release
 echo "Publishing Github Release $BUNDLE_VERSION"
