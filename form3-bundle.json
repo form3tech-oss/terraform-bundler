@@ -14,7 +14,7 @@
     {
       "name": "kibana",
       "url": "https://github.com/ewilde/terraform-provider-kibana",
-      "version": "0.6.0"
+      "version": "0.6.2"
     },
     {
       "name": "alienvault",
