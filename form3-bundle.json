@@ -29,7 +29,7 @@
     {
       "name": "kong",
       "url": "https://github.com/kevholditch/terraform-provider-kong",
-      "version": "1.9.1"
+      "version": "1.9.2"
     },
     {
       "name": "codeowners",
