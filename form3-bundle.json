@@ -35,6 +35,11 @@
       "name": "codeowners",
       "url": "https://github.com/form3tech-oss/terraform-provider-codeowners",
       "version": "0.2.7"
+    },
+    {
+      "name": "pagerduty",
+      "url": "https://github.com/form3tech-oss/terraform-provider-pagerduty",
+      "version": "1.3.0-5-g638b2cd"
     }
   ]
 }
