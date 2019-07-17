@@ -23,8 +23,8 @@
     },
     {
       "name": "auth0",
-      "url": "https://github.com/kevholditch/terraform-provider-auth0",
-      "version": "0.1.0"
+      "url": "https://github.com/form3tech-oss/terraform-provider-auth0",
+      "version": "0.5.1"
     },
     {
       "name": "kong",
