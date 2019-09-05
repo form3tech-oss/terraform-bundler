@@ -66,7 +66,7 @@ function downloadProviders() {
         provider_name=$(echo $provider | jq -r '.name')
         provider_version=$(echo $provider | jq -r '.version')
         provider_url=$(echo $provider | jq -r '.url')
-        $scripts_dir/install_terraform_provider.sh $provider_name $provider_version $provider_url $TARGET_PLATFORM
+        $scripts_dir/install_terraform_provider.sh $provider_name $provider_version $provider_url $RUNNING_PLATFORM $TARGET_PLATFORM
     done
 }
 
