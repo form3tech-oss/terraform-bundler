@@ -1,24 +1,40 @@
 #!/usr/bin/env bash
+
+set -euo pipefail
+
 REPO_WORK_DIR="$(git rev-parse --show-toplevel)"
 PROVIDER_NAME=$1
 PROVIDER_VERSION=$2
 PROVIDER_GITHUB_URL=$3
-ARCH=$4
-OUTPUT_DIRECTORY=$REPO_WORK_DIR/build/plugins
+RUNNING_PLATFORM=$4
+ARCH=$5
+OUTPUT_DIRECTORY="${REPO_WORK_DIR}/build/plugins"
 
-echo Installing ${PROVIDER_NAME} version ${PROVIDER_VERSION} from ${PROVIDER_GITHUB_URL} architecture ${ARCH}
-wget ${PROVIDER_GITHUB_URL}/releases/download/v${PROVIDER_VERSION}/terraform-provider-${PROVIDER_NAME}_${PROVIDER_VERSION}_${ARCH}_amd64.zip -O terraform-provider-${PROVIDER_NAME}.zip
-if [ $? -ne 0 ]; then
-    wget ${PROVIDER_GITHUB_URL}/releases/download/v${PROVIDER_VERSION}/terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION}_${ARCH}_amd64.zip -O terraform-provider-${PROVIDER_NAME}.zip
+pushd "${REPO_WORK_DIR}" > /dev/null
+
+# Download 'fetch' if it doesn't already exist.
+if [[ ! -f bin/fetch ]]; then
+    wget "https://github.com/gruntwork-io/fetch/releases/download/v0.3.6/fetch_${RUNNING_PLATFORM}_amd64" -O bin/fetch && chmod a+x bin/fetch
 fi
 
-unzip terraform-provider-${PROVIDER_NAME}.zip terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION}
+# Delete any previously downloaded release for the current provider.
+rm -f terraform-provider-"${PROVIDER_NAME}"*.zip
 
-if [ ! -f terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION} ]; then
-    unzip terraform-provider-${PROVIDER_NAME}.zip terraform-provider-${PROVIDER_NAME}
-    mv terraform-provider-${PROVIDER_NAME} terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION}
-fi
+# Fetch the requested release.
+bin/fetch --tag="${PROVIDER_VERSION}" --repo="${PROVIDER_GITHUB_URL}" --release-asset="terraform-provider-${PROVIDER_NAME}_.*_${ARCH}_amd64.zip" --github-oauth-token="${GITHUB_TOKEN}" .
 
-mv terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION} $OUTPUT_DIRECTORY/
-chmod +x $OUTPUT_DIRECTORY/terraform-provider-${PROVIDER_NAME}_v${PROVIDER_VERSION}
-rm terraform-provider-${PROVIDER_NAME}.zip
+# Unzip the downloaded release.
+unzip -o terraform-provider-"${PROVIDER_NAME}"*.zip -d "${OUTPUT_DIRECTORY}"
+
+pushd "${OUTPUT_DIRECTORY}" > /dev/null
+
+# Make sure that the resulting binary is correctly named ('terraform-provider-<name>_<version>', where '<version>' starts with a 'v').
+[[ ${PROVIDER_VERSION} == v* ]] || PROVIDER_VERSION="v${PROVIDER_VERSION}"
+[[ -f "terraform-provider-${PROVIDER_NAME}" ]] && mv "terraform-provider-${PROVIDER_NAME}" "terraform-provider-${PROVIDER_NAME}_${PROVIDER_VERSION}"
+
+popd > /dev/null
+
+# Delete the downloaded release.
+rm -f terraform-provider-"${PROVIDER_NAME}"*.zip
+
+popd > /dev/null
