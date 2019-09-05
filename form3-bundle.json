@@ -24,7 +24,7 @@
     {
       "name": "auth0",
       "url": "https://github.com/form3tech-oss/terraform-provider-auth0",
-      "version": "v0.5.2"
+      "version": "v0.5.3"
     },
     {
       "name": "kong",
