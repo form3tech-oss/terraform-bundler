@@ -54,7 +54,7 @@
     {
       "name": "githubteamapprover",
       "url": "https://github.com/form3tech/terraform-provider-githubteamapprover",
-      "version": "v1.0.0"
+      "version": "v1.1.0"
     },
     {
       "name": "githubfile",
