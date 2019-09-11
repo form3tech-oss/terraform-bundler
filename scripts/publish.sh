@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+TERRAFORM_VERSION=$1
 REPO="form3tech-oss/terraform-bundler"
 WORK_DIR="$(git rev-parse --show-toplevel)"
 BUNDLE_FILE_NAME="$(ls $WORK_DIR/build/*.zip)"
@@ -9,7 +10,7 @@ BUNDLE_VERSION=$(echo $BUNDLE_FILE_NAME | cut -d '_' -f 2 )
 BODY="File SHA=$BUNDLE_SHA<br />"
 
 # Generate Release description
-form3_bundle_json="$(cat $WORK_DIR/form3-bundle.json)"
+form3_bundle_json="$(cat $WORK_DIR/form3-bundle-${TERRAFORM_VERSION}.json)"
 providers=$(echo $form3_bundle_json | jq -c -r '.providers[]')
 
 while IFS= read -r provider ; do
