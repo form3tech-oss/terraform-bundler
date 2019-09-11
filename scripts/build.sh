@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 REPO_WORK_DIR="$(git rev-parse --show-toplevel)"
 TARGET_PLATFORM=$1
-form3_bundle_json="$(cat $REPO_WORK_DIR/form3-bundle.json)"
+TERRAFORM_VERSION=$2
+form3_bundle_json="$(cat $REPO_WORK_DIR/form3-bundle-${TERRAFORM_VERSION}.json)"
 build_dir=$REPO_WORK_DIR/build
 plugins_dir=$REPO_WORK_DIR/build/plugins
 scripts_dir=$REPO_WORK_DIR/scripts
@@ -29,8 +30,6 @@ function preparePluginsDirectory() {
 }
 
 function generateTerraformBundleHcl() {
-    terraform_version="$(echo $form3_bundle_json | jq -r '.terraform_version')"
-
     # Clean up file if exists
     cat /dev/null > $build_dir/terraform-bundle.hcl
 
@@ -39,7 +38,7 @@ function generateTerraformBundleHcl() {
 terraform {
   # Version of Terraform to include in the bundle. An exact version number
   # is required.
-  version = "$terraform_version"
+  version = "$TERRAFORM_VERSION"
 }
 CONFIG
 
@@ -72,7 +71,7 @@ function downloadProviders() {
 
 function buildTerraformBundle() {
     pushd $build_dir
-    $REPO_WORK_DIR/bin/terraform-bundle_${RUNNING_PLATFORM}_amd64 package -os=$TARGET_PLATFORM -arch=amd64 $build_dir/terraform-bundle.hcl
+    $REPO_WORK_DIR/bin/terraform-bundle-${TERRAFORM_VERSION}_${RUNNING_PLATFORM}_amd64 package -os=$TARGET_PLATFORM -arch=amd64 $build_dir/terraform-bundle.hcl
     popd
 }
 
