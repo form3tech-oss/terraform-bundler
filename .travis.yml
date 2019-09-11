@@ -1,5 +1,8 @@
 services:
 - docker
+env:
+- TERRAFORM_VERSION=v0.11.14
+- TERRAFORM_VERSION=v0.12.8
 before_script:
 - docker --version
 - pip install --user awscli

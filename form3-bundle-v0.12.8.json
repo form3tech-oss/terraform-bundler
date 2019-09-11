@@ -1,0 +1,19 @@
+{
+  "providers": [
+    {
+      "name": "codeowners",
+      "url": "https://github.com/form3tech-oss/terraform-provider-codeowners",
+      "version": "v0.3.0"
+    },
+    {
+      "name": "githubteamapprover",
+      "url": "https://github.com/form3tech/terraform-provider-githubteamapprover",
+      "version": "v1.1.0"
+    },
+    {
+      "name": "githubfile",
+      "url": "https://github.com/form3tech-oss/terraform-provider-githubfile",
+      "version": "v1.0.0"
+    }
+  ]
+}

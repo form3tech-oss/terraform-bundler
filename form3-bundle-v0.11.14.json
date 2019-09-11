@@ -1,0 +1,64 @@
+{
+  "providers": [
+    {
+      "name": "form3",
+      "url": "https://github.com/form3tech-oss/terraform-provider-form3",
+      "version": "v0.30.0"
+    },
+    {
+      "name": "acme",
+      "url": "https://github.com/paybyphone/terraform-provider-acme",
+      "version": "v0.6.0"
+    },
+    {
+      "name": "kibana",
+      "url": "https://github.com/ewilde/terraform-provider-kibana",
+      "version": "v0.6.3"
+    },
+    {
+      "name": "alienvault",
+      "url": "https://github.com/form3tech-oss/terraform-provider-alienvault",
+      "version": "v0.4.1"
+    },
+    {
+      "name": "auth0",
+      "url": "https://github.com/form3tech-oss/terraform-provider-auth0",
+      "version": "v0.5.3"
+    },
+    {
+      "name": "kong",
+      "url": "https://github.com/kevholditch/terraform-provider-kong",
+      "version": "v1.9.2"
+    },
+    {
+      "name": "codeowners",
+      "url": "https://github.com/form3tech-oss/terraform-provider-codeowners",
+      "version": "v0.2.7"
+    },
+    {
+      "name": "pagerduty",
+      "url": "https://github.com/form3tech-oss/terraform-provider-pagerduty",
+      "version": "v1.3.1-9-g1dbd8c8"
+    },
+    {
+      "name": "vault",
+      "url": "https://github.com/form3tech-oss/terraform-provider-vault",
+      "version": "v2.1.1"
+    },
+    {
+      "name": "logzio",
+      "url": "https://github.com/form3tech-oss/logzio_terraform_provider",
+      "version": "v1.1.0-1-gf21c893"
+    },
+    {
+      "name": "githubteamapprover",
+      "url": "https://github.com/form3tech/terraform-provider-githubteamapprover",
+      "version": "v1.1.0"
+    },
+    {
+      "name": "githubfile",
+      "url": "https://github.com/form3tech-oss/terraform-provider-githubfile",
+      "version": "v1.0.0"
+    }
+  ]
+}
