@@ -3,7 +3,7 @@
     {
       "name": "form3",
       "url": "https://github.com/form3tech-oss/terraform-provider-form3",
-      "version": "v0.30.0"
+      "version": "v0.31.0"
     },
     {
       "name": "acme",
