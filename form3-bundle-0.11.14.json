@@ -31,11 +31,6 @@
       "version": "v1.9.2"
     },
     {
-      "name": "codeowners",
-      "url": "https://github.com/form3tech-oss/terraform-provider-codeowners",
-      "version": "v0.2.7"
-    },
-    {
       "name": "pagerduty",
       "url": "https://github.com/form3tech-oss/terraform-provider-pagerduty",
       "version": "v1.3.1-9-g1dbd8c8"
@@ -49,16 +44,6 @@
       "name": "logzio",
       "url": "https://github.com/form3tech-oss/logzio_terraform_provider",
       "version": "v1.1.0-1-gf21c893"
-    },
-    {
-      "name": "githubteamapprover",
-      "url": "https://github.com/form3tech/terraform-provider-githubteamapprover",
-      "version": "v1.1.0"
-    },
-    {
-      "name": "githubfile",
-      "url": "https://github.com/form3tech-oss/terraform-provider-githubfile",
-      "version": "v1.0.0"
     }
   ]
 }
