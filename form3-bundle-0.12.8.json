@@ -14,6 +14,11 @@
       "name": "githubfile",
       "url": "https://github.com/form3tech-oss/terraform-provider-githubfile",
       "version": "v1.1.0"
+    },
+    {
+      "name": "auth0",
+      "url": "https://github.com/form3tech-oss/terraform-provider-auth0",
+      "version": "v0.6.0"
     }
   ]
 }
