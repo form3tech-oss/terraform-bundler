@@ -28,7 +28,7 @@
     {
       "name": "kong",
       "url": "https://github.com/kevholditch/terraform-provider-kong",
-      "version": "v5.0.0"
+      "version": "v1.9.2"
     }
   ]
 }
