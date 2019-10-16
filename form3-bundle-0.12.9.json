@@ -29,6 +29,11 @@
       "name": "kong",
       "url": "https://github.com/kevholditch/terraform-provider-kong",
       "version": "v1.9.2"
+    },
+    {
+      "name": "logzio",
+      "url": "https://github.com/form3tech-oss/logzio_terraform_provider",
+      "version": "v1.1.3"
     }
   ]
 }
