@@ -1,6 +1,11 @@
 {
   "providers": [
     {
+      "name": "form3",
+      "url": "https://github.com/form3tech-oss/terraform-provider-form3",
+      "version": "v0.37.0"
+    },
+    {
       "name": "codeowners",
       "url": "https://github.com/form3tech-oss/terraform-provider-codeowners",
       "version": "v0.4.1"
