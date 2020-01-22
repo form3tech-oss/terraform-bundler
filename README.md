@@ -20,6 +20,12 @@ To bump to a new version of Terraform, adequate `terraform-bundle-<version>_<os>
 For the time being, these files must be manually built from the `tools/terraform-bundle` directory in https://github.com/hashicorp/terraform, adequately renamed and copied into the `bin/` directory.
 This procedure will be automated in the future.
 
+### Building terraform-bundle
+1. Go to `terraform` repo `/tools/terraform-bundle`
+2. switch to the tag of the tf version you want to build
+3. to create linux binary run `GOOS=linux go build -o terraform-bundle-<version>_linux_amd64` 
+4. to create darwin binary run `GOOS=darwin go build -o terraform-bundle-<version>_darwin_amd64`
+
 ## Binaries must be statically linked
 
 For the provider binaries to work with Terraform, they need to be statically linked when build, see issue [https://github.com/terraform-providers/terraform-provider-helm/pull/111#issue-215953125](https://github.com/terraform-providers/terraform-provider-helm/pull/111#issue-215953125). Basically, if you're building Go binaries, use `CGO_ENABLED=0` when building.
