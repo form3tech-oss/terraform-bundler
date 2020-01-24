@@ -18,7 +18,7 @@
     {
       "name": "alienvault",
       "url": "https://github.com/form3tech-oss/terraform-provider-alienvault",
-      "version": "v0.6.0"
+      "version": "v0.6.1"
     },
     {
       "name": "auth0",
