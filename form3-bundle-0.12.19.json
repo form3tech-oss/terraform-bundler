@@ -49,6 +49,11 @@
       "name": "postgresreplication",
       "url": "https://github.com/form3tech-oss/terraform-provider-postgresreplication",
       "version": "v0.8.0"
+    },
+    {
+      "name": "github",
+      "url": "https://github.com/terraform-providers/terraform-provider-github",
+      "version": "v2.3.0"
     }
   ]
 }
