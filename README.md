@@ -17,7 +17,13 @@ version used by the workspaces in TFE.
 ## Bumping to a new version of Terraform
 
 To bump to a new version of Terraform, adequate `terraform-bundle-<version>_<os>_<arch>` must be placed on the `bin/` directory.
-For the time being, these files must be manually built from the `tools/terraform-bundle` directory in https://github.com/hashicorp/terraform, adequately renamed and copied into the `bin/` directory.
+For the time being, these files must be manually built from the `tools/terraform-bundle` directory in https://github.com/hashicorp/terraform, adequately renamed and copied into the `bin/` directory. Attention! It's the `terraform-bundle` binary that is needed here and not the `terraform` itself. The command should be:
+
+```
+go build tools/terraform-bundle
+GOOS=darwin GOARCH=amd64 go build tools/terraform-bundle
+```
+
 This procedure will be automated in the future.
 
 ### Building terraform-bundle
