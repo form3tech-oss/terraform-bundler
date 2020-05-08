@@ -6,6 +6,11 @@
       "version": "v0.44.2"
     },
     {
+      "name": "alienvault",
+      "url": "https://github.com/form3tech-oss/terraform-provider-alienvault",
+      "version": "v0.7.0"
+    },
+    {
       "name": "codeowners",
       "url": "https://github.com/form3tech-oss/terraform-provider-codeowners",
       "version": "v0.4.1"
