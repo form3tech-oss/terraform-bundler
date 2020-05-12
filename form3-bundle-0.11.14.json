@@ -52,8 +52,8 @@
     },
     {
       "name": "drp",
-      "url": "https://github.com/rackn/terraform-provider-drp",
-      "version": "v1.5.1"
+      "url": "https://github.com/form3tech-oss/terraform-provider-drp",
+      "version": "v1.5.2"
     }
   ]
 }
