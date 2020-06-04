@@ -43,7 +43,7 @@
     {
       "name": "logzio",
       "url": "https://github.com/form3tech-oss/logzio_terraform_provider",
-      "version": "v1.1.0-1-gf21c893"
+      "version": "v1.2.0"
     },
     {
       "name": "postgresreplication",
