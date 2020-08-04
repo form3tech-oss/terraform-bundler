@@ -38,7 +38,7 @@
     {
       "name": "kong",
       "url": "https://github.com/kevholditch/terraform-provider-kong",
-      "version": "v1.9.2"
+      "version": "v1.11.0"
     },
     {
       "name": "pagerduty",
