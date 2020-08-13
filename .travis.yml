@@ -1,3 +1,5 @@
+language: bash
+dist: bionic
 services:
   - docker
 before_script:
@@ -5,10 +7,14 @@ before_script:
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
 script:
-  - make
-branches:
-  only:
-    - master
+  - make clean build
+after_success:
+  - |
+    if [[ ("$TRAVIS_BRANCH" == "master") && ("$TRAVIS_EVENT_TYPE" == "push") ]]; then
+      make publish docker
+    else
+      echo "PR build succeeded, but not publishing!"
+    fi
 notifications:
   slack: form3:SLG0PifAeMC7xowWEt2rjFZn
 env:
@@ -23,5 +29,5 @@ env:
   matrix:
     - TERRAFORM_VERSION=0.11.14
     - TERRAFORM_VERSION=0.12.30
-    - TERRAFORM_VERSION=0.13.0
+    - TERRAFORM_VERSION=0.13.6
     - TERRAFORM_VERSION=0.14.7
