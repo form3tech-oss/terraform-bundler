@@ -20,12 +20,19 @@ To bump to a new version of Terraform, adequate `terraform-bundle-<version>_<os>
 For the time being, these files must be manually built from the `tools/terraform-bundle` directory in https://github.com/hashicorp/terraform, adequately renamed and copied into the `bin/` directory.
 This procedure will be automated in the future.
 
-### Building terraform-bundle
-1. Go to `terraform` repo `/tools/terraform-bundle`
-2. switch to the tag of the tf version you want to build
-3. to create linux binary run `GOOS=linux go build -o terraform-bundle-<version>_linux_amd64` 
-4. to create darwin binary run `GOOS=darwin go build -o terraform-bundle-<version>_darwin_amd64`
+## Building terraform-bundle
 
-## Binaries must be statically linked
+run `make TF_TAG=terraform_tag tf-bundle-build`
 
-For the provider binaries to work with Terraform, they need to be statically linked when build, see issue [https://github.com/terraform-providers/terraform-provider-helm/pull/111#issue-215953125](https://github.com/terraform-providers/terraform-provider-helm/pull/111#issue-215953125). Basically, if you're building Go binaries, use `CGO_ENABLED=0` when building.
+example `make TF_TAG=v0.12.29 tf-bundle-build`
+
+This target will checkout `terraform` repository for the given tag in
+a `tmp` directory and build terraform-builder for you. Once it's done
+it will copy it to your `bin/` directory.
+
+### Build requirements
+
+the make target builds with `CGO_enabled=0` and `-trimpath`. Provider
+binaries needs to be statically linked hence the first option. The
+second option is to be able to generate reproducible binaries. I.e
+running build over the same tag should yield the same binary.
