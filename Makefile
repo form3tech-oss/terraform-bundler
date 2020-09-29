@@ -13,4 +13,7 @@ build:
 publish:
 	@bash -c "./scripts/publish.sh $(TERRAFORM_VERSION)"
 
+docker:
+	@bash -c "./scripts/publish-docker.sh"
+
 .PHONY: build publish clean

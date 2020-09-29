@@ -1,0 +1,3 @@
+credentials "terraform.management.form3.tech" {
+  token = "$TFE_TOKEN"
+}
