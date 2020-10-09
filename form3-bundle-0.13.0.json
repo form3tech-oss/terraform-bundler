@@ -28,7 +28,7 @@
     {
       "name": "vault",
       "url": "https://github.com/form3tech-oss/terraform-provider-vault",
-      "version": "v2.1.1"
+      "version": "v2.14.0"
     },
     {
       "name": "auth0",
