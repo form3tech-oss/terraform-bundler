@@ -1,9 +1,10 @@
+
 {
   "providers": [
     {
       "name": "form3",
       "url": "https://github.com/form3tech-oss/terraform-provider-form3",
-      "version": "v0.42.0"
+      "version": "v0.44.14"
     },
     {
       "name": "acme",
@@ -13,22 +14,22 @@
     {
       "name": "kibana",
       "url": "https://github.com/ewilde/terraform-provider-kibana",
-      "version": "v0.6.3"
+      "version": "v0.7.1"
     },
     {
       "name": "alienvault",
       "url": "https://github.com/form3tech-oss/terraform-provider-alienvault",
-      "version": "v0.6.2"
+      "version": "v0.7.0"
     },
     {
       "name": "auth0",
       "url": "https://github.com/form3tech-oss/terraform-provider-auth0",
-      "version": "v0.6.1"
+      "version": "v0.6.2"
     },
     {
       "name": "kong",
       "url": "https://github.com/kevholditch/terraform-provider-kong",
-      "version": "v1.9.2"
+      "version": "v1.11.0"
     },
     {
       "name": "pagerduty",
@@ -43,7 +44,17 @@
     {
       "name": "logzio",
       "url": "https://github.com/form3tech-oss/logzio_terraform_provider",
-      "version": "v1.1.0-1-gf21c893"
+      "version": "v1.2.0"
+    },
+    {
+      "name": "postgresreplication",
+      "url": "https://github.com/form3tech-oss/terraform-provider-postgresreplication",
+      "version": "v0.8.0"
+    },
+    {
+      "name": "drp",
+      "url": "https://github.com/form3tech-oss/terraform-provider-drp",
+      "version": "v1.5.2"
     }
   ]
 }
