@@ -17,7 +17,7 @@ COPY terraformrc.template /tmp/terraformrc.template
 RUN unzip bundle.zip \
     && mv ./terraform* /bin \
     && mkdir /tf \
-    && mkdir /tf_local_overrides \
+    && mkdir /tf_test_overrides \
     && chmod a+x /custom-entrypoint.sh \
     && terraform version
 

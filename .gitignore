@@ -5,3 +5,4 @@ terraform-bundle/plugins/terraform-provider-*
 output/*.zip
 build/
 bin/fetch
+docker/bundle.zip

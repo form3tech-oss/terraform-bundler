@@ -24,6 +24,6 @@ tf-bundle-build: check-tf-tag
 
 .PHONY: docker
 docker:
-	@bash -c "./scripts/publish-docker.sh"
+	@bash -c "./scripts/publish-docker.sh $(TERRAFORM_VERSION)"
 
 .PHONY: build publish clean

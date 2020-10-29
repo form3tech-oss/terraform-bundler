@@ -10,9 +10,9 @@ create_terraform_configuration() {
     mkdir api-indoor-configuration
 
     cp -R tf/* api-indoor-configuration/
-    cp -R tf_local_overrides/* api-indoor-configuration/
+    cp -R tf_test_overrides/* api-indoor-configuration/
 
-    find ./api-indoor-configuration/ -name '*.aws.tf' -o -name '*.tfvars' -o -name '*.sh' -o -name '*file' -o -name 'state.tf' | xargs rm
+    find ./api-indoor-configuration/ -name '*.aws.tf' -o -name '*.tfvars' -o -name '*.sh' -o -name '*file' -o -name 'state.tf' | xargs -r rm
 }
 
 wait_for_postgres() {
