@@ -1,9 +1,11 @@
-//module "some_queue" {
-//  source                    = "terraform.management.form3.tech/applications/form3_sqs_with_dead_letter/aws"
-//  version                   = "1.2.3"
-//  queue_name                = "some-queue"
-//  stack_name                = "local"
-//  dead_letter_alarm_actions = []
-//  is_local                  = true
-//  environment               = "local"
-//}
+resource "aws_sqs_queue" "terraform_queue" {
+  name                      = "terraform-example-queue"
+  delay_seconds             = 90
+  max_message_size          = 2048
+  message_retention_seconds = 86400
+  receive_wait_time_seconds = 10
+
+  tags = {
+    Environment = "production"
+  }
+}

@@ -1,8 +1,7 @@
 version: '2'
 services:
   postgresql:
-    image: 288840537196.dkr.ecr.eu-west-1.amazonaws.com/tech.form3/postgres:develop
-    command: -c log_statement=all
+    image: postgres:10-alpine
     ports:
       - "5432:5432"
     environment:
@@ -17,6 +16,13 @@ services:
       - SKIP_SETCAP=1
       - VAULT_DEV_ROOT_TOKEN_ID=devToken
 
+  localstack:
+    image: localstack/localstack:0.10.5
+    environment:
+      - SERVICES=iam:4593,sqs:4576,sns:4575,s3:4572,sts:4592
+      - DEFAULT_REGION=eu-west-1
+      - DEBUG=1
+      - TEST_AWS_ACCOUNT_ID=123456789012
 
   wait_for:
     image: dadarek/wait-for-dependencies
@@ -26,7 +32,7 @@ services:
     command: postgresql:5432 vault:8200
 
   indoor_terraform:
-    image: 288840537196.dkr.ecr.eu-west-1.amazonaws.com/tech.form3/form3-terraform-bundle:0.12-develop
+    image: ${DOCKER_REGISTRY}/tech.form3/form3-terraform-bundle:0.12-develop
     volumes:
       - ./tf:/tf
       - ./tf_test_overrides:/tf_test_overrides

@@ -1,12 +1,15 @@
-module "sepadd-gateway_db" {
-  source            = "terraform.management.form3.tech/applications/form3_service_database/postgresql"
-  version           = "0.0.1-12-g7152d68"
-  database_name     = "some-database"
-  app_user          = "some-database_user"
-  psql_host         = var.psql_host
-  psql_port         = var.psql_port
-  psql_user         = var.psql_user
-  psql_password     = var.psql_password
-  is_local          = true
-  grant_replication = true
+resource "postgresql_database" "my_db" {
+  name              = "my_db"
+  owner             = "my_role"
+  template          = "template0"
+  lc_collate        = "C"
+  connection_limit  = -1
+  allow_connections = true
+  depends_on        = [postgresql_role.my_role]
+}
+
+resource "postgresql_role" "my_role" {
+  name     = "my_role"
+  login    = true
+  password = "mypass"
 }

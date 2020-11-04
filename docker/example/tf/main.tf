@@ -13,3 +13,7 @@ provider "vault" {
   address = "http://vault:8200"
   token = "devToken"
 }
+
+provider "aws" {
+  region = "eu-west-1"
+}

@@ -6,48 +6,18 @@ set -e
 
 create_terraform_configuration() {
 
-    if [ -d "api-indoor-configuration" ]; then rm -Rf api-indoor-configuration; fi
-    mkdir api-indoor-configuration
+    if [ -d "terraform-working-dir" ]; then rm -Rf terraform-working-dir; fi
+    mkdir terraform-working-dir
 
-    cp -R tf/* api-indoor-configuration/
-    cp -R tf_test_overrides/* api-indoor-configuration/
+    cp -R tf/* terraform-working-dir/
+    cp -R tf_test_overrides/* terraform-working-dir/
 
-    find ./api-indoor-configuration/ -name '*.aws.tf' -o -name '*.tfvars' -o -name '*.sh' -o -name '*file' -o -name 'state.tf' | xargs -r rm
-}
-
-wait_for_postgres() {
-	START=$(date +%s)
-	echo "Waiting for postgresql at $1 to start on $2…"
-	while ! pg_isready -h $1 -p $2;
-	do
-		if [ $(($(date +%s) - $START)) -gt $TIMEOUT_LENGTH ]; then
-			echo "Postgres $1:$2 did not start within $TIMEOUT_LENGTH seconds. Aborting..."
-			exit 1
-		fi
-		echo "sleeping while postgres starts"
-		sleep $SLEEP_LENGTH
-	done
-}
-
-wait_for_vault() {
-	START=$(date +%s)
-	echo "Waiting for vault at $1 to start…"
-	while ! curl -sSf $1/v1/sys/health
-	do
-		if [ $(($(date +%s) - $START)) -gt $TIMEOUT_LENGTH ]; then
-			echo "Vault did not start within $TIMEOUT_LENGTH seconds. Aborting..."
-			exit 1
-		fi
-		echo "sleeping while vault starts"
-		sleep $SLEEP_LENGTH
-	done
+    find ./terraform-working-dir/ -name '*.aws.tf' -o -name '*.tfvars' -o -name '*.sh' -o -name '*file' -o -name 'state.tf' | xargs -r rm
 }
 
 create_terraform_configuration
-#wait_for_postgres $TF_VAR_psql_host $TF_VAR_psql_port
-#wait_for_vault $TF_VAR_api_vault_address
 
-cd api-indoor-configuration
+cd terraform-working-dir
 
 envsubst '\$TFE_TOKEN' < /tmp/terraformrc.template > ~/.terraformrc
 terraform init

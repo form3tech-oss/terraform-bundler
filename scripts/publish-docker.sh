@@ -67,4 +67,4 @@ fi
 copy_bundle
 set_terraform_version
 TAG="$SIMPLIFIED_TERRAFORM_VERSION-$TAG"
-build_container "form3-terraform-bundle"
+build_container "form3-terraform-bundle" "publish"

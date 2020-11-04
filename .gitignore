@@ -6,3 +6,4 @@ output/*.zip
 build/
 bin/fetch
 docker/bundle.zip
+.env
