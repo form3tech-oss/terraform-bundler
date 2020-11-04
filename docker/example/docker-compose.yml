@@ -32,7 +32,7 @@ services:
     command: postgresql:5432 vault:8200
 
   indoor_terraform:
-    image: ${DOCKER_REGISTRY}/tech.form3/form3-terraform-bundle:0.12-develop
+    image: ${PRIMARY_DOCKER_REGISTRY}/tech.form3/form3-terraform-bundle:0.12-develop
     volumes:
       - ./tf:/tf
       - ./tf_test_overrides:/tf_test_overrides

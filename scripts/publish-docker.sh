@@ -19,26 +19,23 @@ function build_container {
 	echo "building $1 with tag $TAG"
 	docker build -t tech.form3/$1:$TAG $WORK_DIR/docker/.
 
-	echo "docker tag tech.form3/$1:$TAG 288840537196.dkr.ecr.eu-west-1.amazonaws.com/tech.form3/$1:$TAG"
-	docker tag tech.form3/$1:$TAG 288840537196.dkr.ecr.eu-west-1.amazonaws.com/tech.form3/$1:$TAG
-
-	echo "docker tag tech.form3/$1:$TAG 288840537196.dkr.ecr.eu-west-2.amazonaws.com/tech.form3/$1:$TAG"
-	docker tag tech.form3/$1:$TAG 288840537196.dkr.ecr.eu-west-2.amazonaws.com/tech.form3/$1:$TAG
+	docker tag tech.form3/$1:$TAG ${PRIMARY_DOCKER_REGISTRY}/tech.form3/$1:$TAG
+	docker tag tech.form3/$1:$TAG ${SECONDARY_DOCKER_REGISTRY}/tech.form3/$1:$TAG
 
   if [ "$2" = "publish" ]; then
-		echo "Publishing $1:$TAG to eu-west-1"
+		echo "Publishing $1:$TAG to PRIMARY_DOCKER_REGISTRY"
 		eval $(aws ecr get-login --region eu-west-1 --no-include-email)
-		docker push 288840537196.dkr.ecr.eu-west-1.amazonaws.com/tech.form3/$1:$TAG
+		docker push ${PRIMARY_DOCKER_REGISTRY}/tech.form3/$1:$TAG
 
-		echo "Publishing $1:$TAG to eu-west-2"
+		echo "Publishing $1:$TAG to SECONDARY_DOCKER_REGISTRY"
 		eval $(aws ecr get-login --region eu-west-2 --no-include-email)
-		docker push 288840537196.dkr.ecr.eu-west-2.amazonaws.com/tech.form3/$1:$TAG
+		docker push ${SECONDARY_DOCKER_REGISTRY}/tech.form3/$1:$TAG
 
 		echo "Finished publishing to docker registry"
 	elif [ "$2" = "scan" ]; then
 		docker save -o image.tar tech.form3/$1:$TAG
 		eval $(aws ecr get-login --region eu-west-1 --no-include-email)
-		docker run --privileged -v $(pwd):/code -e DOCKERFILE_PATH=./$1/Dockerfile -e SNYK_TOKEN -e TRAVIS 288840537196.dkr.ecr.eu-west-1.amazonaws.com/tech.form3/secscan-docker
+		docker run --privileged -v $(pwd):/code -e DOCKERFILE_PATH=./$1/Dockerfile -e SNYK_TOKEN -e TRAVIS ${PRIMARY_DOCKER_REGISTRY}/tech.form3/secscan-docker
 		rm image.tar
 	fi
 }
