@@ -1,6 +1,6 @@
 TERRAFORM_VERSION ?= 0.11.14
 
-default: clean build publish
+default: clean build publish docker
 
 .PHONY: clean
 clean:
