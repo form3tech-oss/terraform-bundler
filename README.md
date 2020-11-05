@@ -36,3 +36,40 @@ the make target builds with `CGO_enabled=0` and `-trimpath`. Provider
 binaries needs to be statically linked hence the first option. The
 second option is to be able to generate reproducible binaries. I.e
 running build over the same tag should yield the same binary.
+
+## Using the Docker container
+This repository publishes our Terraform Bundle in a docker container so that our apps can use it for their automated tests. One docker
+container per major Terraform version will be published, so for example if we build bundles for versions `0.11.14` and `0.12.29`, then
+the following containers will be published: `0.11-latest` and `0.12-latest` which can then be used in a `docker-compose.yml` like this:
+
+```yaml
+  indoor_terraform:
+    image: ${PRIMARY_DOCKER_REGISTRY}/tech.form3/form3-terraform-bundle:0.12-latest
+    volumes:
+      - ./tf:/tf
+      - ./tf_test_overrides:/tf_test_overrides
+    depends_on:
+      - postgresql
+      - vault
+      - wait_for
+    environment:
+      TFE_TOKEN: ${TFE_TOKEN}
+      TF_VAR_environment: local
+      TF_VAR_api_vault_address: http://vault:8200
+      TF_VAR_api_vault_token: 'devToken'
+      TF_VAR_stack_name: local
+      TF_VAR_psql_user: postgres
+      TF_VAR_psql_password: password
+      TF_VAR_psql_host: postgresql
+      TF_VAR_psql_port: 5432
+```
+
+This configuration assumes there is some configuration in the `docker-compose` file to wait for container to be ready. The container
+provides 2 mount directories:
+
+- `/tf`: The main Terraform configuration should be mounted here
+- `/tf_test_overrides`: The overrides for testing. So for example, some `_override.tf` files which can override the AWS provider
+to point to LocalStack. The main purpose of this directory is to be copied on top of the `tf` directory, allowing the user to overwrite
+files as well.
+
+An example is provided in the `docker/example` directoy.

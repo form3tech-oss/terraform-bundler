@@ -21,3 +21,9 @@ check-tf-tag:
 .PHONY: tf-bundle-build
 tf-bundle-build: check-tf-tag
 	@bash -c "./scripts/tf_bundle_build.sh $(TF_TAG)"
+
+.PHONY: docker
+docker:
+	@bash -c "./scripts/publish-docker.sh $(TERRAFORM_VERSION)"
+
+.PHONY: build publish docker clean
