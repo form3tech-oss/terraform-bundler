@@ -38,7 +38,7 @@
     {
       "name": "vault",
       "url": "https://github.com/form3tech-oss/terraform-provider-vault",
-      "version": "v2.1.5"
+      "version": "v2.1.6"
     },
     {
       "name": "logzio",
