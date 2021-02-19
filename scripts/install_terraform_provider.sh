@@ -14,7 +14,6 @@ pushd "${REPO_WORK_DIR}" > /dev/null
 
 # Download 'fetch' if it doesn't already exist.
 if [[ ! -f bin/fetch ]]; then
-    mkdir -p bin
     wget "https://github.com/gruntwork-io/fetch/releases/download/v0.3.6/fetch_${RUNNING_PLATFORM}_amd64" -O bin/fetch && chmod a+x bin/fetch
 fi
 
