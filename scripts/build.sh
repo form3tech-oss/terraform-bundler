@@ -71,7 +71,7 @@ function downloadProviders() {
 
 function buildTerraformBundle() {
     pushd $build_dir
-    docker run --rm hashicorp/terraform:${TERRAFORM_VERSION} -v ${build_dir}:/build -w /build -u $(id -u):$(id -g) package -os=$TARGET_PLATFORM -arch=amd64 /build/terraform-bundle.hcl
+    $REPO_WORK_DIR/bin/terraform-bundle-${TERRAFORM_VERSION}_${RUNNING_PLATFORM}_amd64 package -os=$TARGET_PLATFORM -arch=amd64 $build_dir/terraform-bundle.hcl
     popd
 }
 
