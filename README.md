@@ -24,7 +24,7 @@ This procedure will be automated in the future.
 
 run `make TF_TAG=terraform_tag tf-bundle-build`
 
-example `make TF_TAG=v0.12.29 tf-bundle-build`
+example `make TF_TAG=v0.12.30 tf-bundle-build`
 
 This target will checkout `terraform` repository for the given tag in
 a `tmp` directory and build terraform-builder for you. Once it's done
@@ -39,7 +39,7 @@ running build over the same tag should yield the same binary.
 
 ## Using the Docker container
 This repository publishes our Terraform Bundle in a docker container so that our apps can use it for their automated tests. One docker
-container per major Terraform version will be published, so for example if we build bundles for versions `0.11.14` and `0.12.29`, then
+container per major Terraform version will be published, so for example if we build bundles for versions `0.11.14` and `0.12.30`, then
 the following containers will be published: `0.11-latest` and `0.12-latest` which can then be used in a `docker-compose.yml` like this:
 
 ```yaml
