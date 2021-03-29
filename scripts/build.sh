@@ -58,6 +58,8 @@ CONFIG
     # Close providers section
     echo "}" >> $build_dir/terraform-bundle.hcl
 
+    echo "Content of $build_dir/terraform-bundle.hcl: "
+    cat $build_dir/terraform-bundle.hcl
 }
 
 function downloadProviders() {
@@ -80,5 +82,4 @@ preparePluginsDirectory
 downloadProviders
 generateTerraformBundleHcl
 buildTerraformBundle
-
 
