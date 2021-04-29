@@ -1,4 +1,4 @@
-TERRAFORM_VERSION ?= 0.11.14
+TERRAFORM_VERSION ?= 0.11.15
 
 default: clean build publish docker
 
