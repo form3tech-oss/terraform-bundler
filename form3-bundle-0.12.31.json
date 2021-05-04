@@ -64,6 +64,11 @@
       "name": "megaport",
       "url": "https://github.com/megaport/terraform-provider-megaport",
       "version": "v0.1.4"
+    },
+    {
+      "name": "drp",
+      "url": "https://github.com/form3tech-oss/terraform-provider-drp",
+      "version": "v1.5.2"
     }
   ]
 }
