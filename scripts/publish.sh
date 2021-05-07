@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 TERRAFORM_VERSION=$1
 REPO="form3tech-oss/terraform-bundler"
 WORK_DIR="$(git rev-parse --show-toplevel)"

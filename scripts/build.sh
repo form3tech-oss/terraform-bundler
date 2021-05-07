@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+set -euo pipefail
+
 REPO_WORK_DIR="$(git rev-parse --show-toplevel)"
 TARGET_PLATFORM=$1
 TERRAFORM_VERSION=$2
