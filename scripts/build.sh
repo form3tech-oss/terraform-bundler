@@ -75,10 +75,10 @@ CONFIG
 
 function generateTerraform13BundleHcl() {
     # Clean up file if exists
-    cat /dev/null > $build_dir/terraform-bundle.hcl
+    cat /dev/null > "$build_dir/terraform-bundle.hcl"
 
     # Add terraform block
-    cat >>$build_dir/terraform-bundle.hcl <<CONFIG
+    cat >> "$build_dir/terraform-bundle.hcl" <<CONFIG
 terraform {
   # Version of Terraform to include in the bundle. An exact version number
   # is required.
@@ -87,40 +87,41 @@ terraform {
 CONFIG
 
     # Add providers block
-    echo "providers {" >> $build_dir/terraform-bundle.hcl
+    echo "providers {" >> "$build_dir/terraform-bundle.hcl"
 
-    echo $form3_bundle_json | jq -c -r '.providers[]' | while read provider ; do
-        provider_name=$(echo $provider | jq -r '.name')
-        provider_version=$(echo $provider | jq -r '.version' | sed -e 's,^v,,g')
+    echo "$form3_bundle_json" | jq -c -r '.providers[]' | while read -r provider ; do
+        provider_name="$(echo "$provider" | jq -r '.name')"
+        provider_version="$(echo "$provider" | jq -r '.version' | sed -e 's,^v,,g')"
+        provider_source="$(echo "$provider" | jq -r '.url' | sed -e 's,^https\?://,,' | cut -d/ -f1,2)/$provider_name"
 
-        cat >>$build_dir/terraform-bundle.hcl <<CONFIG
+        cat >> "$build_dir/terraform-bundle.hcl" <<CONFIG
   $provider_name = {
     versions = ["~> $provider_version"]
-    source = "github.com/form3tech-oss/$provider_name"
+    source = "$provider_source"
   }
 CONFIG
 
     done
 
     # Close providers section
-    echo "}" >> $build_dir/terraform-bundle.hcl
+    echo "}" >> "$build_dir/terraform-bundle.hcl"
 
     echo "Content of $build_dir/terraform-bundle.hcl: "
-    cat $build_dir/terraform-bundle.hcl
+    cat "$build_dir/terraform-bundle.hcl"
 }
 
 function downloadProviders() {
-    echo $form3_bundle_json | jq -c -r '.providers[]' | while read provider ; do
-        provider_name=$(echo $provider | jq -r '.name')
-        provider_version=$(echo $provider | jq -r '.version')
-        provider_url=$(echo $provider | jq -r '.url')
-        $scripts_dir/install_terraform_provider.sh $provider_name $provider_version $provider_url $RUNNING_PLATFORM $TARGET_PLATFORM
+    echo "$form3_bundle_json" | jq -c -r '.providers[]' | while read -r provider ; do
+        provider_name=$(echo "$provider" | jq -r '.name')
+        provider_version=$(echo "$provider" | jq -r '.version')
+        provider_url=$(echo "$provider" | jq -r '.url')
+        "$scripts_dir/install_terraform_provider.sh" "$provider_name" "$provider_version" "$provider_url" "$RUNNING_PLATFORM $TARGET_PLATFORM"
     done
 }
 
 function buildTerraformBundle() {
-    pushd $build_dir
-    $REPO_WORK_DIR/bin/terraform-bundle-${TERRAFORM_VERSION}_${RUNNING_PLATFORM}_amd64 package -os=$TARGET_PLATFORM -arch=amd64 -plugin-dir $build_dir/plugins $build_dir/terraform-bundle.hcl
+    pushd "$build_dir"
+    "$REPO_WORK_DIR/bin/terraform-bundle-${TERRAFORM_VERSION}_${RUNNING_PLATFORM}_amd64" package -os="$TARGET_PLATFORM" -arch=amd64 -plugin-dir "$build_dir/plugins" "$build_dir/terraform-bundle.hcl"
     popd
 }
 
