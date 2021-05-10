@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 WORK_DIR="$(git rev-parse --show-toplevel)"
 TERRAFORM_VERSION=$1
 SIMPLIFIED_TERRAFORM_VERSION=""
