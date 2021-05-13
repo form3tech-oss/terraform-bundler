@@ -73,3 +73,4 @@ to point to LocalStack. The main purpose of this directory is to be copied on to
 files as well.
 
 An example is provided in the `docker/example` directoy.
+
