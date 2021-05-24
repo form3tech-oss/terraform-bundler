@@ -43,7 +43,7 @@
     {
       "name": "pagerduty",
       "url": "https://github.com/form3tech-oss/terraform-provider-pagerduty",
-      "version": "v1.6.1"
+      "version": "v1.8.1"
     },
     {
       "name": "logzio",
