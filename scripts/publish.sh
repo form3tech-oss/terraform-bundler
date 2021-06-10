@@ -37,15 +37,17 @@ EOF
 
 response=$(
   curl --data "$payload" \
-       "https://api.github.com/repos/$REPO/releases?access_token=$GITHUB_TOKEN"
+       --header "Authorization: token $GITHUB_TOKEN" \
+       "https://api.github.com/repos/$REPO/releases"
 )
 
 upload_url="$(echo "$response" | jq -r .upload_url | sed -e "s/{?name,label}//")"
 
 response=$(
     curl --header "Content-Type:application/octet-stream" \
+         --header "Authorization: token $GITHUB_TOKEN" \
          --data-binary "@$BUNDLE_FILE_NAME" \
-         "$upload_url?name=$(basename "$BUNDLE_FILE_NAME")&access_token=$GITHUB_TOKEN"
+         "$upload_url?name=$(basename "$BUNDLE_FILE_NAME")"
 )
 BUNDLE_DOWNLOAD_URL="$(echo "$response" | jq -r .browser_download_url)"
 
