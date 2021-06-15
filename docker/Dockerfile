@@ -1,4 +1,4 @@
-FROM alpine
+FROM 288840537196.dkr.ecr.eu-west-1.amazonaws.com/tech.form3/alpine:3.13.5-f3-1.0.0
 
 RUN apk add --no-cache \
     # necessary for terraform provider plugins
