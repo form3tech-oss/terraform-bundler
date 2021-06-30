@@ -1,9 +1,0 @@
-{
-  "providers": [
-    {
-      "name": "grafanacloud",
-      "url": "https://github.com/form3tech-oss/terraform-provider-grafanacloud",
-      "version": "v0.1.0"
-    }
-  ]
-}
