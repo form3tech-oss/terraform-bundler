@@ -28,9 +28,29 @@ unzip -o terraform-provider-"${PROVIDER_NAME}"*.zip -d "${OUTPUT_DIRECTORY}"
 
 pushd "${OUTPUT_DIRECTORY}" > /dev/null
 
-# Make sure that the resulting binary is correctly named ('terraform-provider-<name>_<version>', where '<version>' starts with a 'v').
-[[ ${PROVIDER_VERSION} == v* ]] || PROVIDER_VERSION="v${PROVIDER_VERSION}"
-[[ -f "terraform-provider-${PROVIDER_NAME}" ]] && mv "terraform-provider-${PROVIDER_NAME}" "terraform-provider-${PROVIDER_NAME}_${PROVIDER_VERSION}"
+if [[ $TERRAFORM_VERSION =~ 0\.1[12]\. ]]; then
+    # Make sure that the resulting binary is correctly named ('terraform-provider-<name>_<version>', where '<version>' starts with a 'v').
+    [[ ${PROVIDER_VERSION} == v* ]] || PROVIDER_VERSION="v${PROVIDER_VERSION}"
+    [[ -f "terraform-provider-${PROVIDER_NAME}" ]] && mv "terraform-provider-${PROVIDER_NAME}" "terraform-provider-${PROVIDER_NAME}_${PROVIDER_VERSION}"
+else
+    # Terraform versions >= 0.13 require a different directory structure in order to locate locally installed plugins.
+    # Details on the strucuture can be found at https://github.com/hashicorp/terraform/tree/main/tools/terraform-bundle#plugins-directory-layout.
+    [[ ${PROVIDER_VERSION} == v* ]] || PROVIDER_VERSION="v${PROVIDER_VERSION}"
+    PROVIDER_VERSION_NO_V="$(echo "$PROVIDER_VERSION" | sed -e 's/^v//')"
+
+    SOURCEHOST="$(echo "$PROVIDER_GITHUB_URL" | cut -d/ -f3)"
+    SOURCENAMESPACE="$(echo "$PROVIDER_GITHUB_URL" | cut -d/ -f4)"
+
+    PLUGIN_DIR="$OUTPUT_DIRECTORY/$SOURCEHOST/$SOURCENAMESPACE/$PROVIDER_NAME/$PROVIDER_VERSION_NO_V/${ARCH}_amd64"
+    PLUGIN_PATH="$PLUGIN_DIR/terraform-provider-${PROVIDER_NAME}"
+    mkdir -p "$PLUGIN_DIR"
+
+    if [[ -f "terraform-provider-${PROVIDER_NAME}_${PROVIDER_VERSION}" ]]; then
+        mv "terraform-provider-${PROVIDER_NAME}_${PROVIDER_VERSION}" "$PLUGIN_PATH"
+    else
+        mv "terraform-provider-${PROVIDER_NAME}" "$PLUGIN_PATH"
+    fi
+fi
 
 popd > /dev/null
 

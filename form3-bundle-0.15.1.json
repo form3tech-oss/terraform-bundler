@@ -1,0 +1,14 @@
+{
+  "providers": [
+    {
+      "name": "grafanacloud",
+      "url": "https://github.com/form3tech-oss/terraform-provider-grafanacloud",
+      "version": "v0.1.0"
+    },
+    {
+      "name": "kong",
+      "url": "https://github.com/kevholditch/terraform-provider-kong",
+      "version": "v1.12.0"
+    }
+  ]
+}

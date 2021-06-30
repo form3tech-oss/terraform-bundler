@@ -26,12 +26,89 @@ GOOS=darwin GOARCH=amd64 go build tools/terraform-bundle
 
 This procedure will be automated in the future.
 
-### Building terraform-bundle
-1. Go to `terraform` repo `/tools/terraform-bundle`
-2. switch to the tag of the tf version you want to build
-3. to create linux binary run `GOOS=linux go build -o terraform-bundle-<version>_linux_amd64` 
-4. to create darwin binary run `GOOS=darwin go build -o terraform-bundle-<version>_darwin_amd64`
+## Building terraform-bundle
 
-## Binaries must be statically linked
+run `make TF_TAG=terraform_tag tf-bundle-build`
 
-For the provider binaries to work with Terraform, they need to be statically linked when build, see issue [https://github.com/terraform-providers/terraform-provider-helm/pull/111#issue-215953125](https://github.com/terraform-providers/terraform-provider-helm/pull/111#issue-215953125). Basically, if you're building Go binaries, use `CGO_ENABLED=0` when building.
+example `make TF_TAG=v0.12.30 tf-bundle-build`
+
+This target will checkout `terraform` repository for the given tag in
+a `tmp` directory and build terraform-builder for you. Once it's done
+it will copy it to your `bin/` directory.
+
+### Build requirements
+
+the make target builds with `CGO_enabled=0` and `-trimpath`. Provider
+binaries needs to be statically linked hence the first option. The
+second option is to be able to generate reproducible binaries. I.e
+running build over the same tag should yield the same binary.
+
+## Using the Docker container
+
+This repository publishes our Terraform Bundle in a docker container so that our apps can use it for their automated tests. One docker
+container per major Terraform version will be published, so for example if we build bundles for versions `0.11.14` and `0.12.30`, then
+the following containers will be published: `0.11-latest` and `0.12-latest` which can then be used in a `docker-compose.yml` like this:
+
+```yaml
+  indoor_terraform:
+    image: ${PRIMARY_DOCKER_REGISTRY}/tech.form3/form3-terraform-bundle:0.12-latest
+    volumes:
+      - ./tf:/tf
+      - ./tf_test_overrides:/tf_test_overrides
+    depends_on:
+      - postgresql
+      - vault
+      - wait_for
+    environment:
+      TFE_TOKEN: ${TFE_TOKEN}
+      TF_VAR_environment: local
+      TF_VAR_api_vault_address: http://vault:8200
+      TF_VAR_api_vault_token: 'devToken'
+      TF_VAR_stack_name: local
+      TF_VAR_psql_user: postgres
+      TF_VAR_psql_password: password
+      TF_VAR_psql_host: postgresql
+      TF_VAR_psql_port: 5432
+```
+
+This configuration assumes there is some configuration in the `docker-compose` file to wait for container to be ready. The container
+provides 2 mount directories:
+
+- `/tf`: The main Terraform configuration should be mounted here
+- `/tf_test_overrides`: The overrides for testing. So for example, some `_override.tf` files which can override the AWS provider
+to point to LocalStack. The main purpose of this directory is to be copied on top of the `tf` directory, allowing the user to overwrite
+files as well. See [Terraform Override](https://www.terraform.io/docs/language/files/override.html) for more details on how to use overrides.
+
+### Terraform Override gotchas
+
+`form3-terraform-bundle` container will ignore all files with `aws.tf` suffix (e.g: `file_name.aws.tf`) before running `terraform init` and `terraform apply` in the container.
+
+If you have a `data` resource in your main TF files and the actual `resource` is defined elsewhere (different repo), then you will need to have a **mock** `resource` defined in the override directory along with the **override** `data` that will be referencing a mock `resource`.
+
+Example:
+
+In your main tf files you have this `data` resource which references an existing AWS resource defined in a different repo:
+
+```terraform
+data aws_sns_topic "sns_notification_topic" {
+  name = "${var.stack_name}-topic-original"
+}
+```
+
+In your terraform overrides you will have to create a new `resource`:
+
+```terraform
+resource "aws_sns_topic" "sns_notification_topic_local" {
+  name = "${var.stack_name}-topic-local" #tfsec:ignore:AWS016 tfsec:ignore:CUS001
+}
+```
+
+and then refer to it in `data` resource override:
+
+```terraform
+data aws_sns_topic "sns_notification_topic" {
+  name = aws_sns_topic.sns_notification_topic_local.name
+}
+```
+
+An example is provided in the `docker/example` directory.
