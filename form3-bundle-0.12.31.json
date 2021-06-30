@@ -3,7 +3,7 @@
     {
       "name": "form3",
       "url": "https://github.com/form3tech-oss/terraform-provider-form3",
-      "version": "v0.44.35"
+      "version": "v0.44.36"
     },
     {
       "name": "alienvault",
@@ -18,7 +18,7 @@
     {
       "name": "githubteamapprover",
       "url": "https://github.com/form3tech/terraform-provider-githubteamapprover",
-      "version": "v3.0.0"
+      "version": "v4.0.0"
     },
     {
       "name": "githubfile",
