@@ -1,0 +1,10 @@
+language: bash
+dist: bionic
+services:
+  - docker
+before_script:
+  - docker --version
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
+script:
+  - echo "Build successful"
